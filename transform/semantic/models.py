@@ -1,0 +1,11 @@
+from pydantic import BaseModel, Field 
+
+
+class Material(BaseModel):
+    material: str
+    percentage: float=Field(ge=0, le=100)
+
+
+class ProductSemantics(BaseModel):
+    composition: Optional[list[Material]]=None
+    certifications: list[str]=[]

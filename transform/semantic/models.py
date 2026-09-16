@@ -1,3 +1,6 @@
+#this file defines the Pydantic enforced structure for the semantic output.
+
+
 from pydantic import BaseModel, Field 
 
 

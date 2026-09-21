@@ -6,8 +6,8 @@ def run_category_normalisation(products):
 
     for product in products:
 
-        sub_category=product['sub_category'].lower()
-        product['parent_category']=category_dictionary[sub_category]
+        category=product['category'].lower()
+        product['normalised category']=category_dictionary[category]
        
 
     return products

@@ -9,7 +9,8 @@ CONFIG={
         'tag':'div',
         'class':'accordion__content rte'
     },
-    'product_locator': '/products'
+    'product_locator': '/products',
+    'json_ld_type': 'ProductGroup'
 }
 
 

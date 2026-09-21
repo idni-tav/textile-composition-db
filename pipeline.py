@@ -4,13 +4,13 @@ from transform.semantic.semantics import run_semantic_extraction
 
 
 # step 1: run scraper 
-products=run_extraction(5)
+products=run_extraction(2)
 
 # step 2: normalise garment category names
 products=run_category_normalisation(products)
 
 # step 3: extract material info from product text
-material_info=run_semantic_extraction(products)
+#material_info=run_semantic_extraction(products)
 
-#print("AFTER:", products[0])
-print(material_info)
+
+print(products)

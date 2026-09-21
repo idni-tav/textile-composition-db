@@ -1,8 +1,8 @@
 from extract.shared.http import get_soup
 from extract.shared.links import normalize_links, extract_product_url
 from extract.shared.html_extractors import extract_json_block, extract_materials
-from extract.sites.aym.adapter import build_product_dict
-from extract.sites.aym.config import CONFIG
+from extract.sites.indigo_luna.adapter import build_product_dict
+from extract.sites.indigo_luna.config import CONFIG
 
 def run_extraction(garment_per_category):
 
@@ -10,6 +10,7 @@ def run_extraction(garment_per_category):
     category_locators=CONFIG["category_locators"]
     product_locator=CONFIG["product_locator"]
     materials_locator=CONFIG["materials_locator"]
+    json_ld_type=CONFIG["json_ld_type"]
 
     category_links=normalize_links(base_url,category_locators)                              
 
@@ -31,7 +32,7 @@ def run_extraction(garment_per_category):
     products=[]
     for link, category in product_links:
         product_soup=get_soup(link)
-        json_data=extract_json_block(product_soup)
+        json_data=extract_json_block(product_soup,json_ld_type)
         materials=extract_materials(product_soup,materials_locator)
         product=build_product_dict(json_data,materials)
         product["category"]=category

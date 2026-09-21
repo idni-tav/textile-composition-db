@@ -1,7 +1,7 @@
 import json
 
 
-def extract_json_block(soup):
+def extract_json_block(soup,json_ld_type):
 
     scripts=soup.find_all("script", type="application/ld+json")
 
@@ -11,19 +11,15 @@ def extract_json_block(soup):
         #case 1: data is a list
         if isinstance(data, list):
             for item in data:
-                if item.get("@type") in ["Product", "ProductGroup"]:
+                if item.get("@type")==json_ld_type:
                     return item
 
         #case 2: data is a dict
         else:
-            if data.get("@type") in ["Product", "ProductGroup"]:
+            if data.get("@type")==json_ld_type:
                 return data
 
     return None
-
-
-
-
 
 def extract_materials(soup, materials_locator):
 
@@ -66,6 +62,72 @@ def extract_materials(soup, materials_locator):
             best_text=full_text
 
     return best_text
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def extract_materials_with_fabric_count(soup, materials_locator):
+
+    tag=materials_locator.get("tag")
+    class_name=materials_locator.get("class")
+
+    blocks=soup.find_all(tag, class_=class_name)
+
+    #safety check
+    if not blocks:
+        return None
+
+    
+    best_text=None
+    max_score=0
+
+    
+    for block in blocks:
+
+        texts=[]
+
+        for node in block.descendants:
+            if node.name in ["script", "style"]:
+                continue
+
+            if node.string:
+                txt=node.string.strip()
+                if txt:
+                    texts.append(txt)
+
+        if not texts:
+            continue
+
+        full_text="\n".join(texts)
+
+        percent_count=full_text.count("%")
+        fabric_count=full_text.lower().count("fabric")
+
+        score=percent_count + fabric_count
+
+        if score>max_score:
+            max_score=score
+            best_text=full_text
+
+    return best_text
+
+
+
 
 
 

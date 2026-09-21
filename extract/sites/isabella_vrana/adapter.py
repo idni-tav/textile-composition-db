@@ -5,6 +5,7 @@ def build_product_dict(json_data, materials):
     variant=variants[0] if len(variants) > 0 else {}
 
     offer=variant.get("offers") or {}
+    
 
     return {
         'brand': (json_data.get("brand") or {}).get("name"),

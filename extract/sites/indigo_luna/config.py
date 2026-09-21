@@ -40,7 +40,8 @@ CONFIG={
         "/collections/skorts-skirts"
     ],
     'materials_locator':{'tag':'div','class':'product-popup-modal__content-info'},
-    'product_locator': '/products'
+    'product_locator': '/products',
+    'json_ld_type': 'Product'
 }
 
 

@@ -10,6 +10,7 @@ CONFIG={
         'class':'accordion__content prose'
     },
     'product_locator':'/products',
+    'json_ld_type': 'ProductGroup'
 }
 
 

@@ -1,4 +1,6 @@
 
+from transform.semantic.models import ProductSemantics
+
 def validate_composition(result: ProductSemantics) -> ProductSemantics:
 
     if result.composition is None:

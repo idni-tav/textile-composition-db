@@ -1,3 +1,7 @@
+
+from transform.semantic.models import ProductSemantics
+import ollama
+from transform.semantic.prompts import SYSTEM_PROMPT
 def extract_semantics(product_text: str) -> ProductSemantics:
 
     response=ollama.chat(

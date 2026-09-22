@@ -11,4 +11,4 @@ class Material(BaseModel):
 
 class ProductSemantics(BaseModel):
     composition: Optional[list[Material]]=None
-    certifications: list[str]=[]
+    certifications: list[str]=None

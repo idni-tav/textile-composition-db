@@ -21,7 +21,84 @@ def extract_json_block(soup,json_ld_type):
 
     return None
 
+
+
+
 def extract_materials(soup, materials_locator):
+
+    tag = materials_locator.get("tag")
+    class_name = materials_locator.get("class")
+    target_text = materials_locator.get("text")
+
+    blocks = soup.find_all(tag, class_=class_name)
+
+    # safety check
+    if not blocks:
+        return None
+
+    # optional text-based refinement
+    if target_text:
+
+        matching_blocks = []
+
+        for block in blocks:
+            block_text = block.get_text(" ", strip=True)
+
+            if target_text in block_text:
+                matching_blocks.append(block)
+
+        blocks = matching_blocks
+
+        # safety check
+        if not blocks:
+            return None
+
+    # if only one block remains, use it directly
+    if len(blocks) == 1:
+        return blocks[0].get_text(" ", strip=True)
+
+    # multiple blocks remain → use percentage count as a fallback
+    best_text = None
+    max_percent_count = 0
+
+    for block in blocks:
+
+        texts = []
+
+        for node in block.descendants:
+
+            if node.name in ["script", "style"]:
+                continue
+
+            if node.string:
+                txt = node.string.strip()
+
+                if txt:
+                    texts.append(txt)
+
+        if not texts:
+            continue
+
+        full_text = "\n".join(texts)
+
+        percent_count = full_text.count("%")
+
+        if percent_count > max_percent_count:
+            max_percent_count = percent_count
+            best_text = full_text
+
+    return best_text
+
+
+
+
+
+
+
+
+
+
+def extract_materials_it_worked(soup, materials_locator):
 
     tag=materials_locator.get("tag")
     class_name=materials_locator.get("class")
